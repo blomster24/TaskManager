@@ -31,10 +31,20 @@ public class TaskHandler {
         tasks.add(task);
     }
 
-    public void deleteTask(int index){
+    public void deleteTask(int index) {
         tasks.remove(index);
     }
 
+    public void completeTask(int index) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (i == index) tasks.get(i).setState(true);
+        }
+    }
 
 
+    public void uncompletedTask(int index) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (i == index) tasks.get(i).setState(false);
+        }
+    }
 }

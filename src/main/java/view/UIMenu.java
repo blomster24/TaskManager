@@ -18,9 +18,9 @@ public class UIMenu {
 
         do {
             System.out.println("1. Add new task");
-            System.out.println("2. Tasks list");
-            System.out.println("3. Complete task");
-            System.out.println("4. Uncompleted task");
+            System.out.println("2. Task list");
+            System.out.println("3. Mark task as complete");
+            System.out.println("4. Mark task as incomplete");
             System.out.println("5. Delete task");
             System.out.println("0. Exit");
             System.out.print(">> ");
@@ -46,8 +46,10 @@ public class UIMenu {
                     showTaskList();
                     break;
                 case 3:
+                    showCompleteTaskMenu();
                     break;
                 case 4:
+                    showUncompletedTaskMenu();
                     break;
                 case 5:
                     showDeleteTaskMenu();
@@ -57,6 +59,8 @@ public class UIMenu {
         } while (response != 0);
     }
 
+
+    // Option 1
     private static void showAddTaskMenu() {
         Scanner sc = new Scanner(System.in);
         String title = "";
@@ -74,6 +78,7 @@ public class UIMenu {
         if (taskHandler.getTasks().size() > 0) System.out.println("Task added");
     }
 
+    //Option 2
     private static void showTaskList() {
         int i = 1;
         if (taskHandler.getTasks().size() == 0) System.out.println("There are no tasks\n");
@@ -84,9 +89,65 @@ public class UIMenu {
             if (task.getState()) state = "Completed";
             if (!task.getState()) state = "Uncompleted";
             System.out.println(i + ". " + task.getTitle() + "\n   Description: " + task.getDescription() + "\n   State: " + state + "\n");
+            i++;
         }
     }
 
+    // Option 3
+    private static void showCompleteTaskMenu() {
+        int taskSize = taskHandler.getTasks().size();
+        if (taskSize == 0) {
+            System.out.println("There are no tasks\n");
+            showMenu();
+        }
+        System.out.println("Select the task to mark as complete");
+        taskList(false);
+        System.out.println("0. Return");
+
+        Scanner sc = new Scanner(System.in);
+        int taskSelected = 0;
+        if (sc.hasNextInt()) {
+            taskSelected = sc.nextInt();
+            if (taskSelected > taskSize) {
+                System.out.println("Enter a number between 0 and " + taskSize + "\n");
+                showCompleteTaskMenu();
+            }
+        } else {
+            System.out.println("Enter a number between 0 and " + taskSize + "\n");
+            showCompleteTaskMenu();
+        }
+        taskHandler.completeTask(taskSelected - 1);
+        System.out.println("Task completed\n");
+    }
+
+    // Option 4
+    private static void showUncompletedTaskMenu() {
+        int taskSize = taskHandler.getTasks().size();
+        if (taskSize == 0) {
+            System.out.println("There are no tasks\n");
+            showMenu();
+        }
+        System.out.println("Select the task to mark as incomplete");
+        taskList(true);
+        System.out.println("0. Return");
+
+        Scanner sc = new Scanner(System.in);
+        int taskSelected = 0;
+        if (sc.hasNextInt()) {
+            taskSelected = sc.nextInt();
+            if (taskSelected > taskSize) {
+                System.out.println("Enter a number between 0 and " + taskSize + "\n");
+                showCompleteTaskMenu();
+            }
+        } else {
+            System.out.println("Enter a number between 0 and " + taskSize + "\n");
+            showCompleteTaskMenu();
+        }
+        taskHandler.uncompletedTask(taskSelected - 1);
+        System.out.println("Task uncompleted\n");
+    }
+
+    //Option 5
     private static void showDeleteTaskMenu() {
         int taskSize = taskHandler.getTasks().size();
         if (taskSize == 0) {
@@ -113,5 +174,19 @@ public class UIMenu {
         System.out.println("Task deleted\n");
     }
 
+    private static void taskList(boolean flag) {
+        String state = "";
+        int i = 1;
+        for (Task task : taskHandler.getTasks()) {
+            if (flag && task.getState()) {
+                System.out.println(i + ". " + task.getTitle() + "\n   Description: " + task.getDescription() + "\n");
+                i++;
+            }
+            if (!flag && !task.getState()) {
+                System.out.println(i + ". " + task.getTitle() + "\n   Description: " + task.getDescription() + "\n");
+                i++;
+            }
+        }
+    }
 
 }
