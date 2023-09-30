@@ -3,9 +3,9 @@ package model;
 public class Task {
     private String title;
     private String description;
-    private Boolean state;
+    private boolean state;
 
-    public Task(String title, String description, Boolean state) {
+    public Task(String title, String description, boolean state) {
         this.title = title;
         this.description = description;
         this.state = state;
@@ -14,6 +14,7 @@ public class Task {
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
+        this.state = false;
     }
 
     public String getTitle() {
@@ -32,7 +33,7 @@ public class Task {
         this.description = description;
     }
 
-    public Boolean getState() {
+    public boolean getState() {
         return state;
     }
 

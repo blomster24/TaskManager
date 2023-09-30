@@ -6,11 +6,16 @@ import java.util.ArrayList;
 
 public class TaskHandler {
 
-    private  ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
+
+    public TaskHandler() {
+        this.tasks = new ArrayList<>();
+    }
 
     public TaskHandler(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
+
 
     public ArrayList<Task> getTasks() {
         return tasks;
@@ -21,10 +26,15 @@ public class TaskHandler {
     }
 
     //Add task
-    public void addTask(String title, String description, boolean state){
-        Task task = new Task(title,description,state);
+    public void addTask(String title, String description) {
+        Task task = new Task(title, description);
         tasks.add(task);
     }
+
+    public void deleteTask(int index){
+        tasks.remove(index);
+    }
+
 
 
 }
